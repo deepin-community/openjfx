@@ -1,0 +1,11 @@
+--- a/build.gradle
++++ b/build.gradle
+@@ -338,7 +338,7 @@
+ defineProperty("JAVAC", cygpathExe("$JDK_HOME/bin/javac"))
+ defineProperty("JAVADOC", cygpathExe("$JDK_HOME/bin/javadoc"))
+ defineProperty("JMOD", cygpathExe("$JDK_HOME/bin/jmod"))
+-defineProperty("JDK_DOCS", "https://docs.oracle.com/javase/10/docs/api/")
++defineProperty("JDK_DOCS", "file:///usr/share/doc/default-jdk/api/")
+ defineProperty("JDK_JMODS", cygpath(System.getenv("JDK_JMODS")) ?: cygpath(System.getenv("JDK_HOME") + "/jmods"))
+ 
+ defineProperty("javaRuntimeVersion", System.getProperty("java.runtime.version"))

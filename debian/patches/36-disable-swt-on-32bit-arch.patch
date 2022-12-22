@@ -1,0 +1,14 @@
+Description: Disable SWT support on 32-bit architectures
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: not-needed
+--- a/build.gradle
++++ b/build.gradle
+@@ -2511,7 +2511,7 @@
+ 
+ project(":swt") {
+     tasks.all {
+-        if (!COMPILE_SWT) it.enabled = false
++        if (!COMPILE_SWT || !IS_64) it.enabled = false
+     }
+ 
+     // javafx.swt is an automatic module

@@ -1,0 +1,3 @@
+version=3
+opts="repack,compression=xz" \
+https://github.com/javafxports/openjdk-jfx/tags .*/(?:jdk-)?(11[\.\+\d]+).zip

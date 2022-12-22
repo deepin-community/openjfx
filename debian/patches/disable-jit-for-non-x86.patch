@@ -1,0 +1,20 @@
+--- a/build.gradle
++++ b/build.gradle
+@@ -3933,11 +3933,17 @@
+                         cmakeArgs = " $cmakeArgs -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_MIN_VERSION -DCMAKE_OSX_SYSROOT=$MACOSX_SDK_PATH"
+                     } else if (t.name == "linux") {
+                         cmakeArgs = " $cmakeArgs -DCMAKE_SYSTEM_NAME=Linux"
++                        /*
+                         if (IS_64) {
+                             cmakeArgs = "$cmakeArgs -DCMAKE_SYSTEM_PROCESSOR=x86_64"
+                         } else {
+                             cmakeArgs = "$cmakeArgs -DCMAKE_SYSTEM_PROCESSOR=i586"
+                         }
++                        */
++                        if ( OS_ARCH != "amd64" && OS_ARCH != "i386" ) {
++                            cmakeArgs = "$cmakeArgs -DENABLE_JIT=OFF"
++                        }
++                        cmakeArgs = "$cmakeArgs -DCMAKE_SYSTEM_PROCESSOR=$OS_ARCH"
+                         // TODO: Use cflags and ldflags from all platforms
+                         def cFlags = webkitProperties.ccFlags?.join(' ') ?: ''
+                         def lFlags = webkitProperties.linkFlags?.join(' ') ?: ''

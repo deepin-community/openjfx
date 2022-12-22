@@ -1,0 +1,42 @@
+Description: Changes the dependency management to use the system jars when building
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: not-needed
+--- a/build.gradle
++++ b/build.gradle
+@@ -1975,7 +1975,8 @@
+     dependencies {
+         stubCompile group: "junit", name: "junit", version: "4.8.2"
+ 
+-        antlr group: "org.antlr", name: "antlr4", version: "4.7.2", classifier: "complete"
++        antlr group: "org.antlr", name: "antlr4", version: "4.7.2"
++        antlr group: "org.antlr", name: "stringtemplate", version: "3.x"
+     }
+ 
+     project.ext.moduleSourcePath = defaultModuleSourcePath_GraphicsOne
+@@ -2515,7 +2516,7 @@
+     commonModuleSetup(project, [ 'base', 'graphics' ])
+ 
+     dependencies {
+-        compile name: SWT_FILE_NAME
++        compile files("/usr/share/java/swt4.jar")
+     }
+ 
+     classes {
+@@ -2945,7 +2946,7 @@
+         doLast {
+             // Copy all of the download libraries to libs directory for the sake of the IDEs
+             File libsDir = rootProject.file("build/libs");
+-            File antLib = new File(libsDir, "ant-1.8.2.jar")
++            File antLib = new File(libsDir, "ant-debian.jar")
+             libsDir.mkdirs();
+ 
+             // Skip copy if file is present.
+@@ -2955,7 +2956,7 @@
+                 copy {
+                     into libsDir
+                     from f.getParentFile()
+-                    include "**/ant-1.8.2.jar"
++                    include "**/ant-debian.jar"
+                     includeEmptyDirs = false
+                 }
+             }

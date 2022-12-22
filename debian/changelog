@@ -1,0 +1,423 @@
+openjfx (11.0.11+0-1) unstable; urgency=medium
+
+  * Team upload.
+
+  [ tony mancill ]
+  * Remove/revert patch to force NUM_COMPILE_THREADS=1
+
+  [ Emmanuel Bourg ]
+  * New upstream release
+    - Refreshed the patches
+  * Don't build the SWT module on 32-bit architectures
+  * Compile WebKit when building all the packages
+  * Disabled the tests (triggered by gradle-debian-helper/2.1)
+  * Standards-Version updated to 4.5.1
+  * Switch to debhelper level 13
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Wed, 03 Feb 2021 16:18:39 +0100
+
+openjfx (11.0.7+0-5) unstable; urgency=medium
+
+  * Team upload.
+  * Mark GST_API symbols as external. Closes: #969260.
+  * Fix jsmin stream handling with Python 3.
+
+ -- Stephen Kitt <skitt@debian.org>  Mon, 21 Sep 2020 15:06:24 +0200
+
+openjfx (11.0.7+0-4) unstable; urgency=medium
+
+  * Team upload.
+  * Force NUM_COMPILE_THREADS=1
+
+ -- tony mancill <tmancill@debian.org>  Wed, 02 Sep 2020 22:38:48 -0700
+
+openjfx (11.0.7+0-3) unstable; urgency=medium
+
+  * Team upload.
+  * Build-depend on python3 (Closes: #937202, #967185)
+
+ -- tony mancill <tmancill@debian.org>  Wed, 05 Aug 2020 21:47:08 -0700
+
+openjfx (11.0.7+0-2) unstable; urgency=medium
+
+  * Disable the Gradle version check when building only the arch all package
+    (Closes: #956585)
+  * Enable the WebKit JIT on arm64
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Mon, 13 Apr 2020 19:10:07 +0200
+
+openjfx (11.0.7+0-1) unstable; urgency=medium
+
+  * New upstream release
+    - Refreshed the patches
+    - Build depend on antlr4 instead of antlr3
+    - Fixed the compatibility with the version of Gradle in Debian
+  * Standards-Version updated to 4.5.0
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Fri, 10 Apr 2020 18:40:20 +0200
+
+openjfx (11.0.2+1-2) unstable; urgency=medium
+
+  [ Bas Couwenberg ]
+  * Team upload.
+  * Add patch to fix FTBFS due to -Werror=deprecated-declarations.
+    (closes: #952062)
+
+ -- Markus Koschany <apo@debian.org>  Sat, 04 Apr 2020 21:26:43 +0200
+
+openjfx (11.0.2+1-1) unstable; urgency=medium
+
+  * New upstream release
+    - Refreshed the patches
+  * Standards-Version updated to 4.3.0
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Sun, 20 Jan 2019 16:25:28 +0100
+
+openjfx (11.0.1+1-1) unstable; urgency=medium
+
+  * New upstream release
+  * Fixed the watch file to track the 11.x updates
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Tue, 04 Dec 2018 18:10:06 +0100
+
+openjfx (11+26-5) unstable; urgency=medium
+
+  * Tentatively fix FTBFS on big endian architectures (Closes: #880359)
+
+ -- Frédéric Bonnard <frediz@debian.org>  Fri, 19 Oct 2018 09:44:51 +0200
+
+openjfx (11+26-4) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Markus Koschany ]
+  * Remove build-on-non-JIT-architectures.patch again. It does not work.
+  * Build-depend on libgtk-3-dev and fix a RuntimeException due to non
+    existent GTK 3 dependency. (Closes: #910585)
+
+  [ Frédéric Bonnard ]
+  * Fix !x86 build.
+    Properly define CMAKE_SYSTEM_PROCESSOR else we get x86_64 or i586
+    whichever architecture.
+    Set ENABLE_JIT=OFF at cmake level for all non x86 architectures.
+    (Closes: #910495)
+
+ -- Markus Koschany <apo@debian.org>  Wed, 10 Oct 2018 22:41:09 +0200
+
+openjfx (11+26-3) unstable; urgency=medium
+
+  * Team upload.
+  * Install the correct javafx.web jar. (Closes: #910501)
+  * Add build-on-non-JIT-architectures.patch and try to fix the
+    build failure on !x86 architectures.
+
+ -- Markus Koschany <apo@debian.org>  Sun, 07 Oct 2018 15:51:48 +0200
+
+openjfx (11+26-2) unstable; urgency=medium
+
+  * Keep the profiles of the parent pom
+  * Install the empty classifier-less artifacts
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Thu, 04 Oct 2018 14:38:49 +0200
+
+openjfx (11+26-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release (Closes: #850921)
+    - Refreshed the patches
+    - Depend on default-jdk instead of openjdk-8
+    - Depend on gradle (>= 4.4)
+    - Updated the watch file to track the JavaFX 11 releases from GitHub
+    - Updated the paths to the modules (modules/foo -> modules/javafx.foo)
+    - Depend on antlr+stringtemplate instead of antlr-complete
+    - New dependency on liblucene4.10-java
+    - New build dependency on zip
+    - Removed the build dependencies on libsqlite3-dev, libxml2-dev, libicu-dev
+      and libxslt1-dev since they are now embedded (Closes: #879769)
+    - No longer use the removed BUILD_JAVADOC and BUILD_SRC_ZIP variables
+    - Updated the Gradle targets to call during the build
+    - Fixed a compilation error in glass_window_ime.cpp with GCC 8
+    - No longer build and install the javafxpackager tool
+    - Install the new Maven artifacts in libopenjfx-java
+    - Install the SDK files in /usr/share/openjfx instead of integrating
+      them with the JDK
+    - Updated the path for the jsmin.py placeholder
+  * Fixed a webkit compilation error with glibc 2.26 or later
+  * Standards-Version updated to 4.2.1
+  * Updated the Homepage field
+  * Removed the unused Lintian overrides
+  * Removed the workaround to build with Gradle 2.x
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Wed, 03 Oct 2018 09:11:05 +0200
+
+openjfx (8u171-b11-2) unstable; urgency=medium
+
+  * Team upload.
+  * Removed the GCC 7 compatibility patch (fixed upstream)
+  * Removed the UChar patches
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Tue, 12 Jun 2018 12:54:12 +0200
+
+openjfx (8u171-b11-1) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Emmanuel Bourg ]
+  * New upstream release:
+    - Refreshed the patches
+  * Standards-Version updated to 4.1.4
+  * Use salsa.debian.org Vcs-* URLs
+
+  [ Peter Michael Green ]
+  * Disable JIT on sub-armv7 (armel/raspbian), it fails to build
+    there with assembler errors (Closes: #895469)
+  * Fix some uint16/char16 issues in javascriptcore
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Mon, 11 Jun 2018 22:05:32 +0200
+
+openjfx (8u161-b12-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release:
+    - Fixes CVE-2018-2581 (Closes: #888530)
+    - Refreshed the patches
+  * Standards-Version updated to 4.1.3
+  * Switch to debhelper level 11
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Thu, 05 Apr 2018 00:18:00 +0200
+
+openjfx (8u151-b12-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release:
+    - Refreshed the patches
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Sun, 22 Oct 2017 22:59:45 +0200
+
+openjfx (8u141-b14-3) unstable; urgency=medium
+
+  * Team upload.
+  * Compile WebKit with the -g1 debugging level to reduce the memory used
+  * Reworked the patch disabling the sampling profiler to stop the compiler
+    from complaining about the redefinition of ENABLE_SAMPLING_PROFILER.
+  * Disabled the WebKit JIT on ARMv4
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Fri, 06 Oct 2017 13:15:57 +0200
+
+openjfx (8u141-b14-2) unstable; urgency=medium
+
+  * Team upload.
+  * Reverted the patch disabling the sampling profiler to its initial state
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Wed, 04 Oct 2017 22:45:26 +0200
+
+openjfx (8u141-b14-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release:
+    - Fixes CVE-2017-10086 and CVE-2017-10114 (Closes: #870860)
+  * Fixed the build failure with GCC 7 (Closes: #853593)
+  * Use the gold linker with memory saving options to avoid build failures
+    caused by lack of RAM (Closes: #857464)
+  * Fixed a build failure on powerpc caused by a different ucontext_t definition
+  * Backported a fix for accented characters in textfields (Closes: #872619)
+  * libopenjfx-java now suggests installing openjfx (Closes: #849419)
+  * Added lintian overrides to remove the warnings related to the js files
+  * Disabled the buildSrc tests to work around a Gradle bug
+  * Standards-Version updated to 4.1.1
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Wed, 04 Oct 2017 20:01:06 +0200
+
+openjfx (8u131-b11-2) unstable; urgency=medium
+
+  * Team upload.
+  * Make a Release instead of a Debug build
+  * Disabled the sampling profiler in WebKit (fails to build on arm64)
+  * Disabled assembler in WebKit on mips
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Wed, 19 Apr 2017 17:31:49 +0200
+
+openjfx (8u131-b11-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release
+    - Refreshed the patches
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Wed, 19 Apr 2017 08:50:30 +0200
+
+openjfx (8u121-b13-2) unstable; urgency=medium
+
+  * Team upload.
+  * Removed the -m32 flags
+  * Removed the -msse2 flag on non Intel architectures
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Wed, 25 Jan 2017 09:10:53 +0100
+
+openjfx (8u121-b13-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release
+    - Refreshed the patches
+    - New build dependency on cmake
+    - Copy libicui18n.so, libicuuc.so, libicudata.so and libsqlite3.so in the
+      modules/web/build/linux/import/lib directory to build JavaScriptCore
+    - Backported a fix for an ambiguous call to the pow() function in BoxShape
+    - Install the javapackager script and its man page
+  * Switch to debhelper level 10
+  * Disabled parallel building to avoid build failures
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Tue, 24 Jan 2017 12:57:41 +0100
+
+openjfx (8u111-b14-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release
+  * Fixed the build failure with GCC 6 (Closes: #837021)
+  * Transition to libswt-gtk-4-java
+  * Updated debian/orig-tar.sh to download the latest releases
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Thu, 24 Nov 2016 15:50:47 +0100
+
+openjfx (8u102-b14-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release
+    - Fixes CVE-2016-3498 (Closes: #832419)
+    - Refreshed the patches
+    - New build dependency on python
+  * Fixed the build failure when building only the arch indep packages
+    (Closes: #825276)
+  * Improved the reproducibility:
+    - Use SOURCE_DATE_EPOCH for the BUILD_TIMESTAMP
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Tue, 26 Jul 2016 11:17:10 +0200
+
+openjfx (8u91-b14-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release
+    - Refreshed the patches
+    - Fixes the security vulnerabilities CVE-2015-4916, CVE-2015-4908,
+      CVE-2015-4906 and CVE-2015-4901 (Closes: #823622)
+  * Build with gradle-debian-helper
+  * Use override_dh_*-{arch,indep} to split the arch all/any operations
+  * Simplified the clean target
+  * Updated debian/watch
+  * Standards-Version updated to 3.9.8 (no changes)
+  * Use secure Vcs-* URLs
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Sat, 07 May 2016 22:32:15 +0200
+
+openjfx (8u60-b27-4) unstable; urgency=medium
+
+  * Team upload.
+  * Don't build java docs and sources for arch-only builds.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 10 Oct 2015 14:37:15 +0200
+
+openjfx (8u60-b27-3) unstable; urgency=medium
+
+  * Team upload.
+  * Kill more -m32 settings.
+  * Increase maximum heap space for the s390x build.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 09 Oct 2015 07:14:06 +0200
+
+openjfx (8u60-b27-2) unstable; urgency=medium
+
+  * Team upload.
+  * Fix build on arm64, patch taken from the webkitgtk package.
+  * Kill most of the direct -m32 / -m64 settings. Closes: #779833.
+  * Add build dependency on openjdk-8-doc, point JDK_DOCS to it.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 08 Oct 2015 09:47:38 +0200
+
+openjfx (8u60-b27-1) unstable; urgency=medium
+
+  [ Emmanuel Bourg ]
+  * New upstream release
+    - Refreshed the patches
+    - Build with qt5-qmake instead of qt4-qmake
+    - New build dependency on ruby
+    - Added a patch to link dynamically against ICU
+    - Removed the non-free JavaScript minifier from the upstream tarball
+  * Fixed a build failure with Gradle 2.5 (Closes: #795851)
+  * Depend on GStreamer 1.0 (Closes: #799280)
+  * Enabled hardening for libavplugin.so, libfxplugins.so, libgstreamer-lite.so
+    and libjfxmedia.so
+
+  [ Matthias Klose ]
+  * Fix installation into the jre architecture directory.
+  * Enable verbose (debug) build for slow architectures.
+  * Build using the qmake linux-g++ spec.
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Wed, 07 Oct 2015 10:05:29 +0200
+
+openjfx (8u40-b25-3) unstable; urgency=medium
+
+  * Fixed a build failure with antlr 3.5.2
+  * Set the locale to 'en' when generating the javadoc to improve
+    the build reproducibility
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Thu, 23 Jul 2015 15:38:43 +0200
+
+openjfx (8u40-b25-2) unstable; urgency=medium
+
+  * Team upload.
+  * Remove build-dep on ksh, which isn't actually required for the build.
+    (Closes: #790382)
+  * Update debian/copyright stanza for the WebKit rendering engine
+    to address a lintian warning.
+  * Replace Build-Depends on qt4-default with libqt4-dev, qtchooser
+    to address lintian error.
+
+ -- tony mancill <tmancill@debian.org>  Sun, 28 Jun 2015 09:44:07 -0700
+
+openjfx (8u40-b25-1) unstable; urgency=medium
+
+  * New upstream release
+    - Refreshed the patches
+    - Removed the libav compatibility patch (fixed upstream)
+    - Added a patch fixing a type definition conflict for UChar32
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Wed, 04 Mar 2015 10:14:28 +0100
+
+openjfx (8u20-b26-3) unstable; urgency=medium
+
+  * Install the jar files in an arch independent directory (Closes: #764241)
+  * Fixed a build failure on slow machines by increasing the timeout
+    for processing the ANTLR grammar.
+  * Disabled the architecture verification in build.gradle to attempt building
+    on more archs than i386 and amd64 (Closes: #765397)
+  * Disabled assembler in WebKit on unsupported architectures
+  * Enable SSE2 on i386 and amd64 only to avoid a build failure on other CPUs
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Fri, 19 Sep 2014 13:47:51 +0200
+
+openjfx (8u20-b26-2) unstable; urgency=medium
+
+  * Moved the Gradle user home directory into the local directory to avoid
+    a build failure with buildd.
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Thu, 18 Sep 2014 23:36:10 +0200
+
+openjfx (8u20-b26-1) unstable; urgency=medium
+
+  * Upload to unstable
+  * New upstream release
+    - Refreshed the patches
+  * Disabled the Gradle version check to build with Gradle 1.5
+  * debian/rules: Updated the path to the SDK generated during the build
+  * Removed the timestamp in the gzipped man pages
+  * Standards-Version updated to 3.9.6 (no changes)
+  * debian/copyright:
+    - Removed the spaces in the licenses short names
+    - Updated the license information for the examples under apps/experiments/
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Thu, 18 Sep 2014 17:05:55 +0200
+
+openjfx (8u5-b13-1) experimental; urgency=low
+
+  * Initial release (Closes: #748413)
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Wed, 25 Jun 2014 15:05:20 +0200

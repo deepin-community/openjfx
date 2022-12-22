@@ -1,0 +1,67 @@
+#!/usr/bin/make -f
+
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+# FIXME: looks like s390x is recognized as a 32bit arch ...
+# more heap on s390x needed
+ifneq (,$(filter $(DEB_HOST_ARCH), s390x))
+  SET_JAVA_OPTS = JAVA_OPTS=-Xmx2304m
+endif
+
+export OPENJFX_HOME = /usr/share/openjfx
+export QT_SELECT    = qt5
+
+%:
+	dh $@ --buildsystem=gradle --no-parallel --with maven-repo-helper
+
+override_dh_auto_configure-arch:
+	cp debian/gradle.properties .
+
+override_dh_auto_configure-indep:
+	echo "GRADLE_VERSION_CHECK = false" >> gradle.properties
+
+override_dh_auto_build-arch:
+	# replace the non-free JavaScript minifier with a noop equivalent
+	cp debian/jsmin-noop.py modules/javafx.web/src/main/native/Source/JavaScriptCore/Scripts/jsmin.py
+
+	$(SET_JAVA_OPTS) dh_auto_build -- zips -x javadoc -x apps
+
+override_dh_auto_build-indep: override_dh_auto_build-arch
+	$(SET_JAVA_OPTS) dh_auto_build -- javadoc
+
+override_dh_auto_test:
+
+override_dh_install-arch:
+	dh_install -a
+
+	# Install the SDK files
+	dh_install -popenjfx build/sdk/lib/javafx.properties $(OPENJFX_HOME)/lib/
+
+	for module in base controls fxml graphics media swing web; do \
+	    dh_link -popenjfx /usr/share/java/javafx-$$module.jar $(OPENJFX_HOME)/lib/javafx.$$module.jar; \
+	done
+
+	# Install the native libraries
+	ls -l build/sdk/lib/
+	dh_install -plibopenjfx-jni build/sdk/lib/*.so usr/lib/$(DEB_HOST_MULTIARCH)/jni
+
+override_dh_install-indep:
+	dh_install -i
+
+	dh_install -popenjfx-source build/sdk/lib/src.zip $(OPENJFX_HOME)/lib/
+
+override_mh_install:
+	mh_install
+
+	# Install the empty classifier-less artifacts
+	for module in base controls fxml graphics media swing web; do \
+	    mh_installjar -plibopenjfx-java debian/poms/javafx-$$module.pom build/publications/javafx.$$module.jar; \
+	done
+
+POM_VERSION=11
+get-orig-poms:
+	wget https://repo1.maven.org/maven2/org/openjfx/javafx/$(POM_VERSION)/javafx-$(POM_VERSION).pom -O debian/poms/javafx.pom
+	for module in base controls fxml graphics media swing web; do \
+	    wget https://repo1.maven.org/maven2/org/openjfx/javafx-$$module/$(POM_VERSION)/javafx-$$module-$(POM_VERSION).pom -O debian/poms/javafx-$$module.pom; \
+	done

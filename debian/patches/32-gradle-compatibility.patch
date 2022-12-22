@@ -1,0 +1,14 @@
+Description: Fixes the compatibility with the version of Gradle in Debian
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: not-needed
+--- a/settings.gradle
++++ b/settings.gradle
+@@ -39,7 +39,7 @@
+ 
+ // Stable publishing behavior is the default in gradle 5.x.
+ // This setting enables it in gradle 4.8 to help with the transition.
+-enableFeaturePreview('STABLE_PUBLISHING')
++//enableFeaturePreview('STABLE_PUBLISHING')
+ 
+ def closedDir = file("../rt-closed")
+ def buildClosed = closedDir.isDirectory()

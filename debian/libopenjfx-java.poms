@@ -1,0 +1,8 @@
+debian/poms/javafx.pom --keep-elements=profiles
+debian/poms/javafx-base.pom      --java-lib --classifier=linux --artifact=build/sdk/lib/javafx.base.jar
+debian/poms/javafx-controls.pom  --java-lib --classifier=linux --artifact=build/sdk/lib/javafx.controls.jar
+debian/poms/javafx-fxml.pom      --java-lib --classifier=linux --artifact=build/sdk/lib/javafx.fxml.jar
+debian/poms/javafx-graphics.pom  --java-lib --classifier=linux --artifact=build/sdk/lib/javafx.graphics.jar
+debian/poms/javafx-media.pom     --java-lib --classifier=linux --artifact=build/sdk/lib/javafx.media.jar
+debian/poms/javafx-swing.pom     --java-lib --classifier=linux --artifact=build/sdk/lib/javafx.swing.jar
+debian/poms/javafx-web.pom       --java-lib --classifier=linux --artifact=build/sdk/lib/javafx.web.jar

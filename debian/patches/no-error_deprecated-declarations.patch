@@ -1,0 +1,14 @@
+Description: Fix FTBFS due to -Werror=deprecated-declarations.
+Author: Bas Couwenberg <sebastic@debian.org>
+Bug-Debian: https://bugs.debian.org/952062
+
+--- a/buildSrc/linux.gradle
++++ b/buildSrc/linux.gradle
+@@ -45,6 +45,7 @@ def commonFlags = [
+         "-fno-strict-aliasing", "-fPIC", "-fno-omit-frame-pointer", // optimization flags
+         "-fstack-protector",
+         "-Wno-error=cast-function-type",
++        "-Wno-error=deprecated-declarations",
+         "-Wextra", "-Wall", "-Wformat-security", "-Wno-unused", "-Wno-parentheses", "-Werror=trampolines"] // warning flags
+ 
+ commonFlags.addAll("dpkg-buildflags --get CPPFLAGS  ".execute().text.trim().split(" "))

@@ -1,0 +1,17 @@
+Description: Disables the WebKit JIT on armel (fails to build)
+Author: Emmanuel Bourg <ebourg@apache.org>
+Forwarded: no
+--- a/modules/javafx.web/src/main/native/Source/WTF/wtf/PlatformEnable.h
++++ b/modules/javafx.web/src/main/native/Source/WTF/wtf/PlatformEnable.h
+@@ -599,6 +599,11 @@
+ #endif
+ #endif
+ 
++#if CPU(ARM) && WTF_ARM_ARCH_VERSION < 5
++#undef ENABLE_JIT
++#define ENABLE_JIT 0
++#endif
++
+ /* FIXME: This should be turned into an #error invariant */
+ /* The FTL *does not* work on 32-bit platforms. Disable it even if someone asked us to enable it. */
+ #if USE(JSVALUE32_64)
