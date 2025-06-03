@@ -18,3 +18,4 @@ disable-jit-for-non-x86.patch
 no-error_deprecated-declarations.patch
 32-gradle-compatibility.patch
 36-disable-swt-on-32bit-arch.patch
+0001-deepin-sw_64-support.diff
